@@ -7,6 +7,7 @@ import com.educore.exception.AlreadyEnrolledException;
 import com.educore.exception.CourseFullException;
 import com.educore.exception.UserNotFoundException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -20,7 +21,7 @@ import java.util.*;
  * {@link Rateable} to track course quality.
  */
 
-public class Course implements Enrollable, Rateable, Cloneable, Comparable<Course>{
+public class Course implements Enrollable, Rateable, Cloneable, Comparable<Course> {
 
     /**
      * Constructs a new Course with the specified details.

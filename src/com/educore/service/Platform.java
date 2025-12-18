@@ -6,6 +6,7 @@ import com.educore.enums.CourseLevel;
 import com.educore.util.SystemHelper;
 import com.educore.exception.UserNotFoundException;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -31,19 +32,7 @@ public class Platform {
      * for testing and demonstration purposes.
      */
     public Platform(){
-        users.add(new Student(1, "Mazen", "Mazen@GroupWork.com", UserRole.STUDENT));
-        users.add(new Student(2, "Meshal", "Meshal@GroupWork.com", UserRole.STUDENT));
-
-        users.add(new Instructor(3, "Rayan", "Rayan@GroupWork.com", UserRole.INSTRUCTOR));
-
-        users.add(new Admin(4, "Osama", "Osama@GroupWork.com", UserRole.ADMIN, this));
-
-        courses.add(new Course(1, 20, "Learn Java fundamentals in two weeks!",
-                23.99, CourseLevel.BEGINNER));
-        courses.add(new Course(2, 30, "Java OOP from zero to hero in 30 days!",
-                43.99, CourseLevel.INTERMEDIATE));
-        courses.add(new Course(3, 10, "Take your java skills to the next level in just 20 days!",
-                67.99, CourseLevel.ADVANCED));
+        users.add(new Admin(1, "Admin", "Admin@edu.com", UserRole.ADMIN, this));
     }
 
     /**
@@ -66,9 +55,7 @@ public class Platform {
      */
     public User searchForUser() throws UserNotFoundException{
         try {
-            SystemHelper.Search searcher = new SystemHelper.Search("Enter a user's Name or Id (Enter 0 to go back): ",
-                    "Error: You must enter a user's Name or Id.",
-                    "Error: You must enter a valid positive Id.");
+            SystemHelper.Search searcher = new SystemHelper.Search();
 
             List<User> users = new ArrayList<>(getUsers());
             if(users.isEmpty()){

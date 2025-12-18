@@ -6,6 +6,7 @@ import com.educore.service.Platform;
 import com.educore.util.SystemHelper;
 import com.educore.exception.UserNotFoundException;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -18,7 +19,7 @@ import java.util.*;
  * Grading students.
  */
 
-public class Instructor extends User implements Cloneable{
+public class Instructor extends User implements Cloneable {
     /** A list of courses this instructor is currently teaching. */
     private ArrayList<Course> teachingCourses;
 
@@ -174,9 +175,7 @@ public class Instructor extends User implements Cloneable{
      */
     public Student findEnrolledStudent(Course course) throws UserNotFoundException {
         try {
-            SystemHelper.Search searcher = new SystemHelper.Search("Enter a student's Name or Id (Enter 0 to go back): ",
-                    "Error: You must enter a student's Name or Id.",
-                    "Error: You must enter a valid positive Id.");
+            SystemHelper.Search searcher = new SystemHelper.Search();
 
             List<User> users = new ArrayList<>(course.getEnrolledStudents());
             Student student = (Student) searcher.searchForUser(users, UserRole.STUDENT);

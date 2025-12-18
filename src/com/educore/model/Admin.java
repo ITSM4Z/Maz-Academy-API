@@ -6,6 +6,7 @@ import com.educore.util.SystemHelper;
 import com.educore.util.Catalogue;
 import com.educore.exception.UserNotFoundException;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -16,7 +17,7 @@ import java.util.*;
  * Accessing the full course catalogue.
  */
 
-public class Admin extends User implements Cloneable{
+public class Admin extends User implements Cloneable {
     /** A reference to the central platform instance to perform system operations. */
     private final Platform platform;
 
@@ -107,9 +108,9 @@ public class Admin extends User implements Cloneable{
         while (true){
             System.out.println();
             System.out.println("------ Admin Dashboard ------");
-            System.out.println("1. View All Users \n2. View All Courses \n3. Add New User \n4. Remove User" +
-                    "\n5. View Students Sorted by GPA \n6. View Courses Sorted by Difficulty" +
-                    "\n7. Demo Generic Catalogue");
+            System.out.println("1. View All Users \n2. View All Courses \n3. Add New User \n4. Edit User" +
+                    "\n5. Remove User \n6. View Students Sorted by GPA \n7. View Courses Sorted by Difficulty" +
+                    "\n8. Demo Generic Catalogue");
 
             choice = new SystemHelper.Choice("Choose an option (Enter 0 to go back): ");
             option = choice.ChoiceByInt(7);
@@ -142,36 +143,46 @@ public class Admin extends User implements Cloneable{
                     createUser();
                     break;
                 case 4:
-                    try {
-                        User user = platform.searchForUser();
-                        if(user == null) break;
-
-                        if(platform.removeUser(user)){
-                            System.out.println(user + " is removed successfully.");
-                        }
-                        else{
-                            System.out.println("CRITICAL: An Unexpected error happened while removing: " + user.name);
-                        }
-
-                    } catch (UserNotFoundException e){
-                        System.out.println(e.getMessage());
-                    }
+                    editUser();
                     break;
                 case 5:
+                    while (true){
+                        try {
+                            User user = platform.searchForUser();
+                            if(user == null) break;
+                            if(user == this){
+                                System.out.println("Error: You cannot remove yourself from the system.");
+                                continue;
+                            }
+
+                            if(platform.removeUser(user)){
+                                System.out.println(user + " is removed successfully.");
+                                break;
+                            }
+                            else{
+                                System.out.println("CRITICAL: An Unexpected error happened while removing: " + user.name);
+                            }
+
+                        } catch (UserNotFoundException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    break;
+                case 6:
                     System.out.println("Students sorted by GPA:");
                     TreeSet<Student> sortedUsers = platform.getStudentsSortedByGPA();
                     for(Student student : sortedUsers){
                         System.out.println(student + " GPA: " + student.calculateGPA());
                     }
                     break;
-                case 6:
+                case 7:
                     System.out.println("Courses sorted by difficulty:");
                     TreeSet<Course> sortedCourses = platform.getCoursesSortedByDifficulty();
                     for(Course course : sortedCourses){
                         System.out.println(course + " Difficulty: " + course.getCourseLevel());
                     }
                     break;
-                case 7:
+                case 8:
                     Catalogue<User> catalogue = new Catalogue<>();
                     catalogue.addItem(platform.getUsers().get(0));
                     catalogue.addItem(platform.getUsers().get(1));
@@ -197,7 +208,7 @@ public class Admin extends User implements Cloneable{
 
         Random rand = new Random();
 
-        System.out.println("------ User Creator ------ \nUser Roles: \n1. Student \n2.Instructor \n3.Admin");
+        System.out.println("------ User Creator ------ \nUser Roles: \n1. Student \n2. Instructor \n3. Admin");
         SystemHelper.Choice choice = new SystemHelper.Choice("Choose a role for the user (Enter 0 to go back): ");
 
         int option = choice.ChoiceByInt(3);
@@ -319,5 +330,17 @@ public class Admin extends User implements Cloneable{
         }
 
         platform.addUser(user);
+    }
+
+    /**
+     * An internal helper method to handle the edit of an existing user.
+     * Shows name, ID, and email from the existing user, validates inputs, and
+     * updates the new user in the Platform.
+     */
+    private void editUser(){
+        //Searches for the user and shows the results
+
+        //When the admin Chooses a user the program prompts the admin to choose a field to edit
+        //Then the method validates the admin's input
     }
 }

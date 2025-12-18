@@ -1,5 +1,6 @@
 package com.educore.model;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**

@@ -1,5 +1,7 @@
 package com.educore.model;
 
+import java.io.Serializable;
+
 /**
  * This class serves as a data model for course content.
  * Represents a single lesson entity containing a title and duration.

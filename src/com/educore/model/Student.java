@@ -6,6 +6,8 @@ import com.educore.util.SystemHelper;
 import com.educore.exception.AlreadyEnrolledException;
 import com.educore.exception.CourseFullException;
 import com.educore.exception.UserNotFoundException;
+
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -18,7 +20,7 @@ import java.util.*;
  * It implements {@link Comparable} to allow sorting students by their GPA.
  */
 
-public class Student extends User implements Cloneable, Comparable<Student>{
+public class Student extends User implements Cloneable, Comparable<Student> {
     /** A list of courses the student is currently active in. */
     private ArrayList<Course> enrolledCourses;
     /**

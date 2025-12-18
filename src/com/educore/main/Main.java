@@ -1,7 +1,7 @@
 package com.educore.main;
 
 import com.educore.model.*;
-import com.educore.service.Platform;
+import com.educore.service.*;
 import com.educore.util.SystemHelper;
 import com.educore.exception.UserNotFoundException;
 import java.util.*;
@@ -22,8 +22,16 @@ public class Main {
      * Based on the selection, it launches the appropriate dashboard.
      */
     public static void main(String[] args) {
+        DatabaseService.initializeDatabase();
+        Platform platform = DatabaseService.loadPlatform();
         User currentUser;
-        Platform platform = new Platform();
+
+        if(platform.getUsers().isEmpty()){
+            platform = new Platform();
+            DatabaseService.savePlatform(platform);
+            System.out.println("There is no users in the system. default admin with the name Admin has been created.");
+        }
+
         List<User> userList = platform.getUsers();
 
         while (true){
@@ -38,6 +46,7 @@ public class Main {
             switch (option){
                 case 0:
                     System.out.println("Thank you for using the E-Learning Platform Program!");
+                    DatabaseService.savePlatform(platform);
                     return;
                 case 1:
                     List<Admin> admins = new ArrayList<>();
@@ -48,6 +57,12 @@ public class Main {
                             admins.add((Admin) user);
                         }
                     }
+
+                    if(admins.isEmpty()){
+                        System.out.println("No Admins found.");
+                        continue;
+                    }
+
                     option = choice.ChoiceByInt(admins.size());
                     if(option == 0) continue;
 
@@ -71,6 +86,12 @@ public class Main {
                             instructors.add((Instructor) user);
                         }
                     }
+
+                    if(instructors.isEmpty()){
+                        System.out.println("No Instructors found.");
+                        continue;
+                    }
+
                     option = choice.ChoiceByInt(instructors.size());
                     if(option == 0) continue;
 
@@ -94,6 +115,12 @@ public class Main {
                             students.add((Student) user);
                         }
                     }
+
+                    if(students.isEmpty()){
+                        System.out.println("No Students found.");
+                        continue;
+                    }
+
                     option = choice.ChoiceByInt(students.size());
                     if(option == 0) continue;
 
