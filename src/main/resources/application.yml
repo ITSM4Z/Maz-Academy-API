@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: maz-academy
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lms_db
+    username: postgres
+    password: maz
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
