@@ -1,4 +1,4 @@
-package com.maz.academy.exception;
+package com.maz.academy.core.exceptions;
 
 /**
  * A custom checked Exception to use when something is not found.

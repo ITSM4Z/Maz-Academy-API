@@ -1,4 +1,4 @@
-package com.maz.academy.interfaces;
+package com.maz.academy.core.interfaces;
 
 /**
  * An interface representing any entity that can receive ratings from users.

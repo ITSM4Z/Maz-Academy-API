@@ -1,4 +1,4 @@
-package com.maz.academy.enums;
+package com.maz.academy.core.enums;
 
 /**
  * The role of the user in the platform system.

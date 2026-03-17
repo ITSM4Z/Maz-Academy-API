@@ -1,4 +1,4 @@
-package com.maz.academy.enums;
+package com.maz.academy.core.enums;
 
 /**
 * these are the difficulty levels of the courses,

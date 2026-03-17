@@ -1,9 +1,9 @@
-package com.maz.academy.interfaces;
+package com.maz.academy.core.interfaces;
 
-import com.maz.academy.model.Student;
-import com.maz.academy.exception.AlreadyEnrolledException;
-import com.maz.academy.exception.CourseFullException;
-import com.maz.academy.exception.UserNotFoundException;
+import com.maz.academy.user.Student;
+import com.maz.academy.course.AlreadyEnrolledException;
+import com.maz.academy.course.CourseFullException;
+import com.maz.academy.core.exceptions.UserNotFoundException;
 
 /**
  * An interface that represents any entity that a student can enroll in or drop from.
