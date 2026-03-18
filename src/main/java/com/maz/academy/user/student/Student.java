@@ -1,6 +1,7 @@
-package com.maz.academy.user;
+package com.maz.academy.user.student;
 
 import com.maz.academy.core.models.Enrollment;
+import com.maz.academy.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -22,5 +23,6 @@ public class Student extends User {
     )
     private List<Enrollment> enrollments;
 
+    private String major;
     private double gpa;
 }

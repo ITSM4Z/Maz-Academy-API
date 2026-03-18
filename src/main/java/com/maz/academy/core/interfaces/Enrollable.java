@@ -1,6 +1,6 @@
 package com.maz.academy.core.interfaces;
 
-import com.maz.academy.user.Student;
+import com.maz.academy.user.student.Student;
 import com.maz.academy.course.AlreadyEnrolledException;
 import com.maz.academy.course.CourseFullException;
 import com.maz.academy.core.exceptions.UserNotFoundException;

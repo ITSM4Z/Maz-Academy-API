@@ -1,6 +1,7 @@
-package com.maz.academy.user;
+package com.maz.academy.user.instructor;
 
 import com.maz.academy.core.models.Teaching;
+import com.maz.academy.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

@@ -1,5 +1,7 @@
-package com.maz.academy.course;
+package com.maz.academy.course.module;
 
+import com.maz.academy.course.Course;
+import com.maz.academy.course.lesson.Lesson;
 import jakarta.persistence.*;
 import lombok.Data;
 

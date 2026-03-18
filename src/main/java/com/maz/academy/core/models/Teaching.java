@@ -1,7 +1,7 @@
 package com.maz.academy.core.models;
 
 import com.maz.academy.course.Course;
-import com.maz.academy.user.Instructor;
+import com.maz.academy.user.instructor.Instructor;
 import jakarta.persistence.*;
 import lombok.Data;
 

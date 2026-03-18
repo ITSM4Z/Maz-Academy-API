@@ -3,6 +3,7 @@ package com.maz.academy.course;
 import com.maz.academy.core.enums.CourseLevel;
 import com.maz.academy.core.models.Enrollment;
 import com.maz.academy.core.models.Teaching;
+import com.maz.academy.course.module.Module;
 import jakarta.persistence.*;
 import lombok.Data;
 
