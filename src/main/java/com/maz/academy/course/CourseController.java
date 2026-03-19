@@ -1,48 +1,30 @@
 package com.maz.academy.course;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class CourseController {
-    private final CourseRepository courseRepository;
+    private final CourseService courseService;
 
-    public CourseController(CourseRepository courseRepository){
-        this.courseRepository = courseRepository;
+    public CourseController(CourseService courseService){
+        this.courseService = courseService;
     }
 
     @PostMapping("/courses")
-    public CourseResponseDTO create(@RequestBody CourseDTO courseDTO){
-        return toCourseResponseDTO(courseRepository.save(toCourse(courseDTO)));
+    public CourseResponseDTO saveCourse(@Valid @RequestBody CourseDTO courseDTO){
+        return courseService.saveCourse(courseDTO);
     }
 
     @GetMapping("/courses")
-    public List<CourseResponseDTO> findAll(){
-        return courseRepository.findAll()
-                .stream()
-                .map(this::toCourseResponseDTO)
-                .toList();
+    public List<CourseResponseDTO> findAllCourse(){
+        return courseService.findAllCourse();
     }
 
     @GetMapping("/courses/{course_id}")
-    public CourseResponseDTO findById(@PathVariable int course_id){
-        return toCourseResponseDTO(
-                courseRepository.findById(course_id)
-                        .orElseThrow(() -> new CourseNotFoundException("Course not found!"))
-        );
-    }
-
-    private Course toCourse(CourseDTO dto){
-        Course course = new Course();
-        course.setTitle(dto.title());
-        course.setCapacity(dto.capacity());
-        course.setPrice(dto.price());
-        course.setCourseLevel(dto.level());
-        return course;
-    }
-
-    private CourseResponseDTO toCourseResponseDTO(Course course){
-        return CourseResponseDTO.fromEntity(course);
+    public CourseResponseDTO findCourseById(@PathVariable int course_id){
+        return courseService.findCourseById(course_id);
     }
 }

@@ -7,6 +7,7 @@ import com.maz.academy.course.module.Module;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -18,7 +19,7 @@ public class Course {
     private int courseId;
     private int capacity;
     private String title;
-    private double price;
+    private BigDecimal price;
     private double averageRating;
 
     private List<Double> ratings;

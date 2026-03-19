@@ -1,51 +1,48 @@
 package com.maz.academy.user.student;
 
-import com.maz.academy.core.exceptions.UserNotFoundException;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
 public class StudentController {
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    public StudentController(StudentRepository studentRepository) { this.studentRepository = studentRepository; }
+    public StudentController(StudentService studentService) { this.studentService = studentService; }
 
     @PostMapping("/users/students")
-    public StudentResponseDTO create(@RequestBody StudentDTO studentDTO){
-        Student savedStudent = studentRepository.save(toStudent(studentDTO));
-        return toStudentResponseDto(savedStudent);
+    public StudentResponseDTO saveStudent(@Valid @RequestBody StudentDTO studentDTO){
+        return studentService.saveStudent(studentDTO);
     }
 
     @GetMapping("/users/students")
-    public List<StudentResponseDTO> findAll(){
-        return studentRepository.findAll()
-                .stream()
-                .map(this::toStudentResponseDto)
-                .toList();
+    public List<StudentResponseDTO> findAllStudent(){
+        return studentService.findAllStudent();
     }
 
     @GetMapping("/users/students/{student_id}")
-    public StudentResponseDTO findById(@PathVariable int student_id){
-        return toStudentResponseDto(
-                studentRepository.findById(student_id)
-                        .orElseThrow(() -> new UserNotFoundException("Student not found!"))
-        );
+    public StudentResponseDTO findStudentById(@PathVariable int student_id){
+        return studentService.findStudentById(student_id);
     }
 
-    private Student toStudent(StudentDTO dto){
-        Student student = new Student();
-        student.setName(dto.name());
-        student.setEmail(dto.email());
-        student.setMajor(dto.major());
-        return student;
-    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException e
+    ){
+        HashMap<String, String> errors = new HashMap<>();
 
-    private StudentResponseDTO toStudentResponseDto(Student student){
-        return new StudentResponseDTO(
-                student.getName(),
-                student.getEmail(),
-                student.getMajor()
-        );
+        e.getBindingResult().getAllErrors()
+                .forEach(error -> {
+                    String fieldName = ((FieldError) error).getField();
+                    String errorMessage = error.getDefaultMessage();
+                    errors.put(fieldName, errorMessage);
+                });
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

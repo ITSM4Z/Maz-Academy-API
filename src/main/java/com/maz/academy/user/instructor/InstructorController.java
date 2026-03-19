@@ -7,43 +7,24 @@ import java.util.List;
 
 @RestController
 public class InstructorController {
-    private final InstructorRepository instructorRepository;
+    private final InstructorService instructorService;
 
-    public InstructorController(InstructorRepository instructorRepository) { this.instructorRepository = instructorRepository; }
+    public InstructorController(InstructorService instructorService) {
+        this.instructorService = instructorService;
+    }
 
     @PostMapping("/users/instructors")
-    public InstructorResponseDTO create(@RequestBody InstructorDTO user){
-        Instructor instructor = instructorRepository.save(toInstructor(user));
-        return toInstructorResponseDto(instructor);
+    public InstructorResponseDTO saveInstructor(@RequestBody InstructorDTO user){
+        return instructorService.saveInstructor(user);
     }
 
     @GetMapping("/users/instructors")
-    public List<InstructorResponseDTO> findAll(){
-        return instructorRepository.findAll()
-                .stream()
-                .map(this::toInstructorResponseDto)
-                .toList();
+    public List<InstructorResponseDTO> findAllInstructor(){
+        return instructorService.findAllInstructor();
     }
 
     @GetMapping("/users/instructors/{instructor_id}")
-    public InstructorResponseDTO findById(@PathVariable int instructor_id){
-        return toInstructorResponseDto(
-                instructorRepository.findById(instructor_id)
-                        .orElseThrow(() -> new UserNotFoundException("Instructor not found!"))
-        );
-    }
-
-    private Instructor toInstructor(InstructorDTO dto){
-        Instructor instructor = new Instructor();
-        instructor.setName(dto.name());
-        instructor.setEmail(dto.email());
-        return instructor;
-    }
-
-    private InstructorResponseDTO toInstructorResponseDto(Instructor instructor){
-        return new InstructorResponseDTO(
-                instructor.getName(),
-                instructor.getEmail()
-        );
+    public InstructorResponseDTO findInstructorById(@PathVariable int instructor_id){
+        return instructorService.findInstructorById(instructor_id);
     }
 }

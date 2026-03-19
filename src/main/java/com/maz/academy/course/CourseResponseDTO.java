@@ -1,16 +1,15 @@
 package com.maz.academy.course;
 
 import com.maz.academy.core.enums.CourseLevel;
-import com.maz.academy.core.models.Teaching;
 import com.maz.academy.course.module.Module;
 
-
+import java.math.BigDecimal;
 import java.util.List;
 
 public record CourseResponseDTO(
         String title,
         int capacity,
-        double price,
+        BigDecimal price,
         double rating,
         CourseLevel level,
         List<String> instructors,
